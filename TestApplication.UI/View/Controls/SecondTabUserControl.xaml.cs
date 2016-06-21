@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TestApplication.UI.View
+namespace TestApplication.UI.View.Controls
 {
     /// <summary>
-    /// Interaction logic for FirstTabUserControl.xaml
+    /// Interaction logic for SecondTabUserControl.xaml
     /// </summary>
-    public partial class FirstTabUserControl : UserControl
+    public partial class SecondTabUserControl : UserControl
     {
-        public FirstTabUserControl()
+        public SecondTabUserControl()
         {
             InitializeComponent();
         }

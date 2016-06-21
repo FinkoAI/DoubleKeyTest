@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using DoubleKeyCollection.Implementations;
 
 namespace DoubleKeyCollection.Interfaces
 {
-    public interface IDoubleKeyDictionary<in TId, in TName, TValue>
+    public interface IDoubleKeyDictionary<TId, TName, TValue> : IDictionary<DoubleKey<TId, TName>, TValue>
     {
         TValue this[TId id, TName name] { get; set; }
         void Add(TId id, TName name, TValue value);
@@ -11,5 +12,6 @@ namespace DoubleKeyCollection.Interfaces
         bool Remove(TId id, TName name);
         IEnumerable<TValue> GetById(TId id);
         IEnumerable<TValue> GetByName(TName name);
+        new void Clear();
     }
 }

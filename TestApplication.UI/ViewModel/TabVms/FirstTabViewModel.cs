@@ -13,11 +13,12 @@ namespace TestApplication.UI.ViewModel.TabVms
         #region Private fields
         private readonly FirstTabModel _model;
 
-        private ObservableCollection<FirstTabGridRecordVm> _gridDataSource;
+        private ObservableCollection<SimpleTabGridRecordVm> _gridDataSource;
         private ObservableCollection<string> _searchResult; 
 
         private int _idSearch;
         private string _nameSearch;
+        private string _searchResultHeader;
 
         private FirstTabFilterTypes _filterType;
         #endregion
@@ -29,8 +30,11 @@ namespace TestApplication.UI.ViewModel.TabVms
             _filterType = FirstTabFilterTypes.FilterByBoth;
 
             _model = new FirstTabModel();
-            _model.InitilaizeData(100000);
-            GridDataSource = new ObservableCollection<FirstTabGridRecordVm>(_model.GetFullData());
+            //_model.InitilaizeData(1000000);
+            _model.InitilaizeData(10000);
+            GridDataSource = new ObservableCollection<SimpleTabGridRecordVm>(_model.GetFullData());
+            NameSearch = string.Empty;
+            SearchResultHeader = "Результаты поиска...";
         }
 
         #endregion
@@ -45,9 +49,9 @@ namespace TestApplication.UI.ViewModel.TabVms
 
         #region Public members
 
-        public ObservableCollection<FirstTabGridRecordVm> GridDataSource
+        public ObservableCollection<SimpleTabGridRecordVm> GridDataSource
         {
-            get { return _gridDataSource ?? (_gridDataSource = new ObservableCollection<FirstTabGridRecordVm>()); }
+            get { return _gridDataSource ?? (_gridDataSource = new ObservableCollection<SimpleTabGridRecordVm>()); }
             set { Set(() => GridDataSource, ref _gridDataSource, value); }
         }
 
@@ -66,7 +70,16 @@ namespace TestApplication.UI.ViewModel.TabVms
         public string NameSearch
         {
             get { return _nameSearch; }
-            set { Set(() => NameSearch, ref _nameSearch, value); }
+            set
+            {
+                Set(() => NameSearch, ref _nameSearch, value);
+            }
+        }
+
+        public string SearchResultHeader
+        {
+            get { return _searchResultHeader; }
+            set { Set(() => SearchResultHeader, ref _searchResultHeader, value); }
         }
 
         public FirstTabFilterTypes FilterType
@@ -90,18 +103,21 @@ namespace TestApplication.UI.ViewModel.TabVms
                 case FirstTabFilterTypes.FilterById:
                     timer.Start();
                     _model.GetDataFilteredById(IdSearch).ForEach(SearchResult.Add);
+                    SearchResultHeader = $"Найдено {GridDataSource.Count} записей";
                     timer.Stop();
                     Debug.Print("Заняло: {0} мс", timer.ElapsedMilliseconds);
                     break;
                 case FirstTabFilterTypes.FilterByName:
                     timer.Start();
                     _model.GetDataFilteredByName(NameSearch).ForEach(SearchResult.Add);
+                    SearchResultHeader = $"Найдено {GridDataSource.Count} записей";
                     timer.Stop();
                     Debug.Print("Заняло: {0} мс", timer.ElapsedMilliseconds);
                     break;
                 case FirstTabFilterTypes.FilterByBoth:
                     timer.Start();
                     _model.GetDataFilteredByBoth(IdSearch, NameSearch).ForEach(SearchResult.Add);
+                    SearchResultHeader = $"Найдено {GridDataSource.Count} записей";
                     timer.Stop();
                     Debug.Print("Заняло: {0} мс", timer.ElapsedMilliseconds);
                     break;
@@ -118,6 +134,7 @@ namespace TestApplication.UI.ViewModel.TabVms
         private void ClearCommandHandler()
         {
             SearchResult.Clear();
+            SearchResultHeader = "Результаты поиска...";
         }
 
         #endregion

@@ -13,6 +13,24 @@ namespace DoubleKeyCollection.Implementations
     public class DoubleKeyDictionary<TId, TName, TValue> : Dictionary<DoubleKey<TId, TName>, TValue>,
         IDoubleKeyDictionary<TId, TName, TValue>
     {
+        #region Private fields
+
+        private readonly Dictionary<TId, List<DoubleKey<TId, TName>>> _idIndexDictionary;
+        private readonly Dictionary<TName, List<DoubleKey<TId, TName>>> _nameIndexDictionary;
+
+        #endregion
+
+        #region Constructors
+
+        public DoubleKeyDictionary()
+        {
+            _idIndexDictionary = new Dictionary<TId, List<DoubleKey<TId, TName>>>();
+            _nameIndexDictionary = new Dictionary<TName, List<DoubleKey<TId, TName>>>();
+        }
+
+        #endregion
+
+        #region Public properties
 
         /// <summary>
         /// Получет/записывает значение с заданными ключами
@@ -39,6 +57,10 @@ namespace DoubleKeyCollection.Implementations
             }
         }
 
+        #endregion
+
+        #region Public members
+
         /// <summary>
         /// Добавляет значение с заданными ключами
         /// </summary>
@@ -49,7 +71,30 @@ namespace DoubleKeyCollection.Implementations
         {
             lock (this)
             {
-                Add(DoubleKey<TId, TName>.Create(id, name), value);
+                var newKey = DoubleKey<TId, TName>.Create(id, name);
+
+                Add(newKey, value);
+                List<DoubleKey<TId, TName>> keyHashForId;
+                List<DoubleKey<TId, TName>> keyHashForName;
+
+                if (_idIndexDictionary.TryGetValue(id, out keyHashForId))
+                {
+                    keyHashForId.Add(newKey);
+                }
+                else
+                {
+                    _idIndexDictionary.Add(id, new List<DoubleKey<TId, TName>> {newKey});
+                }
+
+                if (_nameIndexDictionary.TryGetValue(name, out keyHashForName))
+                {
+                    keyHashForName.Add(newKey);
+                }
+                else
+                {
+                    _nameIndexDictionary.Add(name, new List<DoubleKey<TId, TName>> {newKey});
+                }
+
             }
         }
 
@@ -93,7 +138,15 @@ namespace DoubleKeyCollection.Implementations
         {
             lock (this)
             {
-                return Remove(DoubleKey<TId, TName>.Create(id, name));
+                var keyForRemove = DoubleKey<TId, TName>.Create(id, name);
+
+                if (!Remove(keyForRemove))
+                    return false;
+
+                _idIndexDictionary[id].Remove(keyForRemove);
+                _nameIndexDictionary[name].Remove(keyForRemove);
+
+                return true;
             }
         }
 
@@ -106,8 +159,11 @@ namespace DoubleKeyCollection.Implementations
         {
             lock (this)
             {
-                var filteredKeys = Keys.ToList().FindAll(x => x.Item1.Equals(id));
-                return filteredKeys.Select(key => this[key.Item1, key.Item2]);
+                List<DoubleKey<TId, TName>> filteredKeys;
+
+                return _idIndexDictionary.TryGetValue(id, out filteredKeys)
+                    ? filteredKeys.Select(key => this[key.Item1, key.Item2])
+                    : new List<TValue>();
             }
         }
 
@@ -120,9 +176,26 @@ namespace DoubleKeyCollection.Implementations
         {
             lock (this)
             {
-                var filterdKeys = Keys.ToList().FindAll(x => x.Item2.Equals(name));
-                return filterdKeys.Select(key => this[key.Item1, key.Item2]);
+                List<DoubleKey<TId, TName>> filteredKeys;
+                return _nameIndexDictionary.TryGetValue(name, out filteredKeys)
+                    ? filteredKeys.Select(key => this[key.Item1, key.Item2])
+                    : new List<TValue>();
             }
         }
+
+        /// <summary>
+        /// Очищает коллекцию
+        /// </summary>
+        public new void Clear()
+        {
+            lock (this)
+            {
+                base.Clear();
+                _idIndexDictionary.Clear();
+                _nameIndexDictionary.Clear();
+            }
+        }
+        #endregion
+        
     }
 }

@@ -79,7 +79,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\FirstTabUserControl.xaml">
+    <Page Include="View\Controls\FirstTabUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\SecondTabUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\ThirdTabUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialogs\AddRecordDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -95,12 +107,28 @@
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Model\FirstTabFilterTypes.cs" />
     <Compile Include="Model\FirstTabModel.cs" />
+    <Compile Include="Model\SecondTabModel.cs" />
+    <Compile Include="Model\ThirdTabModel.cs" />
+    <Compile Include="Model\UserIdType.cs" />
     <Compile Include="TemplateSelectors\SearchTemplateSelector.cs" />
-    <Compile Include="ViewModel\GridRecordsVm\FirstTabGridRecordVm.cs" />
+    <Compile Include="ViewModel\DialogVms\AddRecordDialogVm.cs" />
+    <Compile Include="ViewModel\GridRecordsVm\SimpleTabGridRecordVm.cs" />
+    <Compile Include="ViewModel\GridRecordsVm\UserTypeKeyGridRecordVm.cs" />
     <Compile Include="ViewModel\TabVms\FirstTabViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="View\FirstTabUserControl.xaml.cs">
+    <Compile Include="ViewModel\TabVms\SecondTabViewModel.cs" />
+    <Compile Include="ViewModel\TabVms\ThirdTabViewModel.cs" />
+    <Compile Include="View\Controls\FirstTabUserControl.xaml.cs">
       <DependentUpon>FirstTabUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\SecondTabUserControl.xaml.cs">
+      <DependentUpon>SecondTabUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\ThirdTabUserControl.xaml.cs">
+      <DependentUpon>ThirdTabUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialogs\AddRecordDialog.xaml.cs">
+      <DependentUpon>AddRecordDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

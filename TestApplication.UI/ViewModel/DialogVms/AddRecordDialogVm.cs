@@ -1,8 +1,13 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using GalaSoft.MvvmLight;
 
-namespace TestApplication.UI.ViewModel.GridRecordsVm
+namespace TestApplication.UI.ViewModel.DialogVms
 {
-    public class FirstTabGridRecordVm : ViewModelBase
+    public class AddRecordDialogVm : ViewModelBase
     {
         #region Private fields
 
@@ -12,31 +17,29 @@ namespace TestApplication.UI.ViewModel.GridRecordsVm
 
         #endregion
 
-        #region Constructors
+        #region Properties
 
-        public FirstTabGridRecordVm(int id, string name, string value)
+        /// <summary>
+        /// ID записи
+        /// </summary>
+        public int Id
         {
-            Id = id;
-            Name = name;
-            Value = value;
-        }
-
-        #endregion
-
-        #region Public members
-
-
-        public int Id {
             get { return _id; }
             set { Set(() => Id, ref _id, value); }
         }
 
+        /// <summary>
+        /// Имя записи
+        /// </summary>
         public string Name
         {
             get { return _name; }
             set { Set(() => Name, ref _name, value); }
         }
 
+        /// <summary>
+        /// Значение записи
+        /// </summary>
         public string Value
         {
             get { return _value; }
@@ -44,5 +47,6 @@ namespace TestApplication.UI.ViewModel.GridRecordsVm
         }
 
         #endregion
+
     }
 }

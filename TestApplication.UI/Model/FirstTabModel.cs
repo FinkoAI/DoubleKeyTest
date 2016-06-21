@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.IO.Ports;
 using System.Linq;
 using DoubleKeyCollection.Implementations;
+using DoubleKeyCollection.Interfaces;
 using TestApplication.UI.Helpers;
 using TestApplication.UI.ViewModel.GridRecordsVm;
 
@@ -11,7 +9,7 @@ namespace TestApplication.UI.Model
 {
     public class FirstTabModel
     {
-        private DoubleKeyDictionary<int, string, string> _testDictionary;
+        private IDoubleKeyDictionary<int, string, string> _testDictionary;
 
         public void InitilaizeData(int count)
         {
@@ -20,7 +18,7 @@ namespace TestApplication.UI.Model
             for (int i = 0; i < count; i++)
             {
                 var id = RandomHelper.RandomInt();
-                var name = RandomHelper.RandomString(10);
+                var name = RandomHelper.RandomString(3);
                 var value = RandomHelper.RandomString(100);
 
                 if (!_testDictionary.ContainsKey(id, name))
@@ -29,9 +27,9 @@ namespace TestApplication.UI.Model
         }
 
 
-        public IEnumerable<FirstTabGridRecordVm> GetFullData()
+        public IEnumerable<SimpleTabGridRecordVm> GetFullData()
         {
-            return _testDictionary.Select(x => new FirstTabGridRecordVm(x.Key.Id, x.Key.Name, x.Value));
+            return _testDictionary.Select(x => new SimpleTabGridRecordVm(x.Key.Id, x.Key.Name, x.Value));
         }
 
         public List<string> GetDataFilteredById(int id)

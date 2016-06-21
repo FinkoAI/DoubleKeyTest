@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestApplication.UI"
-        xmlns:view="clr-namespace:TestApplication.UI.View"
+        xmlns:view="clr-namespace:TestApplication.UI.View.Controls"
         xmlns:TabVms="clr-namespace:TestApplication.UI.ViewModel.TabVms"
         x:Class="TestApplication.UI.View.MainWindow"
         mc:Ignorable="d">
@@ -12,11 +12,15 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TabControl>
-            <TabItem Header="Вкладка 1">
+            <TabItem Header="Вкладка: 1000000 записей + фильтры">
                 <view:FirstTabUserControl DataContext="{Binding FirstTabVm}" />
             </TabItem>
-            <TabItem Header="Вкладка 3" />
-            <TabItem Header="Вкладка 4" />
+            <TabItem Header="Вкладка: добавление и удаление записей">
+                <view:SecondTabUserControl DataContext="{Binding SecondTabVm}" />
+            </TabItem>
+            <TabItem Header="Вкладка: использование объекта в качестве ключа">
+                <view:ThirdTabUserControl DataContext="{Binding ThirdTabVm}"></view:ThirdTabUserControl>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
