@@ -17,9 +17,9 @@
 
         #region Properties
 
-        public long Identifier { get; private set; }
+        public long Identifier { get; }
 
-        public int Size { get; private set; }
+        public int Size { get; }
 
         #endregion
 
@@ -32,7 +32,11 @@
 
         public override int GetHashCode()
         {
-            return Identifier.GetHashCode() ^ Size.GetHashCode();
+            var hash = 17;
+            hash = hash*31 + Identifier.GetHashCode();
+            hash = hash*31 + Size.GetHashCode();
+
+            return hash;
         }
 
         #endregion
