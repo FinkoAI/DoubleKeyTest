@@ -3,10 +3,16 @@ using System.Windows;
 using System.Windows.Controls;
 using TestApplication.UI.Model;
 
-namespace TestApplication.UI.TemplateSelectors
+namespace TestApplication.UI.Content.TemplateSelectors
 {
     public class SearchTemplateSelector : DataTemplateSelector
     {
+        /// <summary>
+        /// Подставляет шаблон поиска в зависимости от выбранного enum
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="container"></param>
+        /// <returns></returns>
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             DataTemplate template;

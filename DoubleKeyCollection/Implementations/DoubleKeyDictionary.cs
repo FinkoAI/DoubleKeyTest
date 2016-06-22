@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DoubleKeyCollection.Interfaces;
 
@@ -10,13 +11,13 @@ namespace DoubleKeyCollection.Implementations
     /// <typeparam name="TId">Тип части ключа ID</typeparam>
     /// <typeparam name="TName">Тип части ключа Name</typeparam>
     /// <typeparam name="TValue">Тип значения</typeparam>
-    public class DoubleKeyDictionary<TId, TName, TValue> : Dictionary<DoubleKey<TId, TName>, TValue>,
+    public class DoubleKeyDictionary<TId, TName, TValue> : Dictionary<IDoubleKey<TId, TName>, TValue>,
         IDoubleKeyDictionary<TId, TName, TValue>
     {
         #region Private fields
 
-        private readonly Dictionary<TId, List<DoubleKey<TId, TName>>> _idIndexDictionary;
-        private readonly Dictionary<TName, List<DoubleKey<TId, TName>>> _nameIndexDictionary;
+        private readonly Dictionary<TId, List<IDoubleKey<TId, TName>>> _idIndexDictionary;
+        private readonly Dictionary<TName, List<IDoubleKey<TId, TName>>> _nameIndexDictionary;
 
         #endregion
 
@@ -24,8 +25,8 @@ namespace DoubleKeyCollection.Implementations
 
         public DoubleKeyDictionary()
         {
-            _idIndexDictionary = new Dictionary<TId, List<DoubleKey<TId, TName>>>();
-            _nameIndexDictionary = new Dictionary<TName, List<DoubleKey<TId, TName>>>();
+            _idIndexDictionary = new Dictionary<TId, List<IDoubleKey<TId, TName>>>();
+            _nameIndexDictionary = new Dictionary<TName, List<IDoubleKey<TId, TName>>>();
         }
 
         #endregion
@@ -74,8 +75,8 @@ namespace DoubleKeyCollection.Implementations
                 var newKey = DoubleKey<TId, TName>.Create(id, name);
 
                 Add(newKey, value);
-                List<DoubleKey<TId, TName>> keyHashForId;
-                List<DoubleKey<TId, TName>> keyHashForName;
+                List<IDoubleKey<TId, TName>> keyHashForId;
+                List<IDoubleKey<TId, TName>> keyHashForName;
 
                 if (_idIndexDictionary.TryGetValue(id, out keyHashForId))
                 {
@@ -83,7 +84,7 @@ namespace DoubleKeyCollection.Implementations
                 }
                 else
                 {
-                    _idIndexDictionary.Add(id, new List<DoubleKey<TId, TName>> {newKey});
+                    _idIndexDictionary.Add(id, new List<IDoubleKey<TId, TName>> {newKey});
                 }
 
                 if (_nameIndexDictionary.TryGetValue(name, out keyHashForName))
@@ -92,7 +93,7 @@ namespace DoubleKeyCollection.Implementations
                 }
                 else
                 {
-                    _nameIndexDictionary.Add(name, new List<DoubleKey<TId, TName>> {newKey});
+                    _nameIndexDictionary.Add(name, new List<IDoubleKey<TId, TName>> {newKey});
                 }
 
             }
@@ -159,10 +160,10 @@ namespace DoubleKeyCollection.Implementations
         {
             lock (this)
             {
-                List<DoubleKey<TId, TName>> filteredKeys;
+                List<IDoubleKey<TId, TName>> filteredKeys;
 
                 return _idIndexDictionary.TryGetValue(id, out filteredKeys)
-                    ? filteredKeys.Select(key => this[key.Item1, key.Item2])
+                    ? filteredKeys.Select(key => this[key.Id, key.Name])
                     : new List<TValue>();
             }
         }
@@ -176,9 +177,9 @@ namespace DoubleKeyCollection.Implementations
         {
             lock (this)
             {
-                List<DoubleKey<TId, TName>> filteredKeys;
+                List<IDoubleKey<TId, TName>> filteredKeys;
                 return _nameIndexDictionary.TryGetValue(name, out filteredKeys)
-                    ? filteredKeys.Select(key => this[key.Item1, key.Item2])
+                    ? filteredKeys.Select(key => this[key.Id, key.Name])
                     : new List<TValue>();
             }
         }

@@ -2,11 +2,19 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace TestApplication.UI.Converters
+namespace TestApplication.UI.Content.Converters
 {
     [ValueConversion(typeof(Enum), typeof(bool))]
     public class EnumToBoolConverter : IValueConverter
     {
+        /// <summary>
+        /// Возвращает соответствующий выбранному RadioButton enum
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null || parameter == null) return false;
@@ -16,6 +24,14 @@ namespace TestApplication.UI.Converters
             return outputValue;
         }
 
+        /// <summary>
+        /// Выбирает RadioButton в зависимости от enum параметра
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null || parameter == null) return null;

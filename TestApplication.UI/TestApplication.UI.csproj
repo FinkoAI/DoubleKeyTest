@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -103,14 +104,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Converters\EnumToBoolConverter.cs" />
+    <Compile Include="Content\Converters\EnumToBoolConverter.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Model\FirstTabFilterTypes.cs" />
-    <Compile Include="Model\FirstTabModel.cs" />
-    <Compile Include="Model\SecondTabModel.cs" />
-    <Compile Include="Model\ThirdTabModel.cs" />
+    <Compile Include="Model\TabModels\FirstTabModel.cs" />
+    <Compile Include="Model\TabModels\SecondTabModel.cs" />
+    <Compile Include="Model\TabModels\ThirdTabModel.cs" />
     <Compile Include="Model\UserIdType.cs" />
-    <Compile Include="TemplateSelectors\SearchTemplateSelector.cs" />
+    <Compile Include="Content\TemplateSelectors\SearchTemplateSelector.cs" />
     <Compile Include="ViewModel\DialogVms\AddRecordDialogVm.cs" />
     <Compile Include="ViewModel\GridRecordsVm\SimpleTabGridRecordVm.cs" />
     <Compile Include="ViewModel\GridRecordsVm\UserTypeKeyGridRecordVm.cs" />

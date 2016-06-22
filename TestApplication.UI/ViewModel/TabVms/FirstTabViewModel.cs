@@ -4,10 +4,15 @@ using System.Diagnostics;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using TestApplication.UI.Model;
+using TestApplication.UI.Model.TabModels;
 using TestApplication.UI.ViewModel.GridRecordsVm;
+using System.Collections.Generic;
 
 namespace TestApplication.UI.ViewModel.TabVms
 {
+    /// <summary>
+    /// ViewModel 
+    /// </summary>
     public class FirstTabViewModel : ViewModelBase
     {
         #region Private fields
@@ -30,9 +35,8 @@ namespace TestApplication.UI.ViewModel.TabVms
             _filterType = FirstTabFilterTypes.FilterByBoth;
 
             _model = new FirstTabModel();
-            //_model.InitilaizeData(1000000);
-            _model.InitilaizeData(10000);
-            GridDataSource = new ObservableCollection<SimpleTabGridRecordVm>(_model.GetFullData());
+            _model.InitilaizeData(1000000); //при установке больше миллиона записей вызывается OutOfMemory, чтобы обойти можно не держать объект в памяти
+            GridDataSource = new ObservableCollection<SimpleTabGridRecordVm>(_model.Items);
             NameSearch = string.Empty;
             SearchResultHeader = "Результаты поиска...";
         }
@@ -98,27 +102,32 @@ namespace TestApplication.UI.ViewModel.TabVms
             var timer = new Stopwatch();
             timer.Reset();
 
+            List<string> records;
+
             switch (FilterType)
             {
                 case FirstTabFilterTypes.FilterById:
                     timer.Start();
-                    _model.GetDataFilteredById(IdSearch).ForEach(SearchResult.Add);
-                    SearchResultHeader = $"Найдено {GridDataSource.Count} записей";
+                    records = _model.GetDataFilteredById(IdSearch);                    
                     timer.Stop();
+                    records.ForEach(SearchResult.Add);
+                    SearchResultHeader = $"Найдено {records.Count} записей";
                     Debug.Print("Заняло: {0} мс", timer.ElapsedMilliseconds);
                     break;
                 case FirstTabFilterTypes.FilterByName:
                     timer.Start();
-                    _model.GetDataFilteredByName(NameSearch).ForEach(SearchResult.Add);
-                    SearchResultHeader = $"Найдено {GridDataSource.Count} записей";
+                    records = _model.GetDataFilteredByName(NameSearch);                    
                     timer.Stop();
+                    records.ForEach(SearchResult.Add);
+                    SearchResultHeader = $"Найдено {records.Count} записей";
                     Debug.Print("Заняло: {0} мс", timer.ElapsedMilliseconds);
                     break;
                 case FirstTabFilterTypes.FilterByBoth:
                     timer.Start();
-                    _model.GetDataFilteredByBoth(IdSearch, NameSearch).ForEach(SearchResult.Add);
-                    SearchResultHeader = $"Найдено {GridDataSource.Count} записей";
+                    records = _model.GetDataFilteredByBoth(IdSearch, NameSearch);
                     timer.Stop();
+                    records.ForEach(SearchResult.Add);
+                    SearchResultHeader = $"Найдено {records.Count} записей";
                     Debug.Print("Заняло: {0} мс", timer.ElapsedMilliseconds);
                     break;
                 default:

@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using TestApplication.UI.Model;
+using TestApplication.UI.Model.TabModels;
 using TestApplication.UI.ViewModel.GridRecordsVm;
 
 namespace TestApplication.UI.ViewModel.TabVms

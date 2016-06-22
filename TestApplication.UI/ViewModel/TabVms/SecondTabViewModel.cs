@@ -2,7 +2,7 @@
 using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using TestApplication.UI.Model;
+using TestApplication.UI.Model.TabModels;
 using TestApplication.UI.View.Dialogs;
 using TestApplication.UI.ViewModel.DialogVms;
 using TestApplication.UI.ViewModel.GridRecordsVm;

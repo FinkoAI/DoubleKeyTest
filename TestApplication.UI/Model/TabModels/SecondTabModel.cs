@@ -4,8 +4,11 @@ using DoubleKeyCollection.Implementations;
 using DoubleKeyCollection.Interfaces;
 using TestApplication.UI.ViewModel.GridRecordsVm;
 
-namespace TestApplication.UI.Model
+namespace TestApplication.UI.Model.TabModels
 {
+    /// <summary>
+    /// Модель второй вкладки
+    /// </summary>
     public class SecondTabModel
     {
         #region Private fields

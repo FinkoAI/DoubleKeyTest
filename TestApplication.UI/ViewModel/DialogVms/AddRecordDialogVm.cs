@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 
 namespace TestApplication.UI.ViewModel.DialogVms
 {
+    /// <summary>
+    /// ViewModel диалога добавления записи
+    /// </summary>
     public class AddRecordDialogVm : ViewModelBase
     {
         #region Private fields

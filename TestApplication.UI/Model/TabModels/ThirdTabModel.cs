@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DoubleKeyCollection.Implementations;
 using DoubleKeyCollection.Interfaces;
 using TestApplication.UI.Helpers;
 using TestApplication.UI.ViewModel.GridRecordsVm;
 
-namespace TestApplication.UI.Model
+namespace TestApplication.UI.Model.TabModels
 {
+    /// <summary>
+    /// Модель третьей вкладки
+    /// </summary>
     public class ThirdTabModel
     {
         #region Private fields

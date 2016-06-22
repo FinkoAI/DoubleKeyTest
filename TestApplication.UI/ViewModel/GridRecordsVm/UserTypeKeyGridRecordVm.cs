@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 
 namespace TestApplication.UI.ViewModel.GridRecordsVm
 {
+    /// <summary>
+    /// ViewModel записи грида с пользовательским ключом Id
+    /// </summary>
     public class UserTypeKeyGridRecordVm : ViewModelBase
     {
         #region Private fields

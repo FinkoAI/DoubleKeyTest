@@ -15,6 +15,9 @@ namespace TestApplication.UI.Helpers
         /// </summary>
         private static readonly Random StringRandom = new Random();
 
+        /// <summary>
+        /// Генератор случайных чисел
+        /// </summary>
         private static readonly Random IntRandom = new Random();
 
         /// <summary>
@@ -29,7 +32,11 @@ namespace TestApplication.UI.Helpers
               .Select(s => s[StringRandom.Next(s.Length)]).ToArray());
         }
 
-        public static int RandomInt()
+        /// <summary>
+        /// Функция получения случайного числа
+        /// </summary>
+        /// <returns></returns>
+        public static int RandomInt() 
         {
             return IntRandom.Next(1, 100);
         }

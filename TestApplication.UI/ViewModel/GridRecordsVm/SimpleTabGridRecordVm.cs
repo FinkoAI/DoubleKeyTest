@@ -2,6 +2,9 @@
 
 namespace TestApplication.UI.ViewModel.GridRecordsVm
 {
+    /// <summary>
+    /// ViewModel записи грида
+    /// </summary>
     public class SimpleTabGridRecordVm : ViewModelBase
     {
         #region Private fields
